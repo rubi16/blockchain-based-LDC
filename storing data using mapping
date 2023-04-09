@@ -1,0 +1,25 @@
+pragma solidity ^0.8.18;
+
+contract plant_Detail{
+
+// structure for storing the detail
+    struct plant_info{
+        uint id;
+        uint capacity;
+        uint costperunit;
+    }
+
+
+    mapping(uint => plant_info) public infolist;
+
+    
+    function setStruct(uint _id, uint _capacity, uint _costperunit) public{
+
+        infolist[_id].id= _id;
+        infolist[_id].capacity= _capacity;
+        infolist[_id].costperunit= _costperunit;
+    }
+
+      function getStruct(uint _id) public view returns(plant_info memory){
+        return(infolist[_id]);
+    }
