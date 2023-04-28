@@ -1,0 +1,47 @@
+pragma solidity ^0.8.18;
+
+contract plant_Detail{
+
+// structure for storing the detail
+    struct Plant_info{
+        uint id;
+        uint capacity;
+        uint costperunit;
+    }
+
+    mapping(uint => Plant_info) public infolist;
+
+    uint[] private idList;
+    
+    function setPlantInfo(uint _id, uint _capacity, uint _costperunit) public{
+        infolist[_id].id = _id;
+        infolist[_id].capacity = _capacity;
+        infolist[_id].costperunit = _costperunit;
+        idList.push(_id);
+    }
+
+    function getPlantInfoAsPerCost() public view returns(Plant_info[] memory){
+        uint length = idList.length;  
+        Plant_info[] memory pi = new Plant_info[](length);
+
+        for(uint i=0;i<length;i++){
+            pi[i] = infolist[idList[i]];
+        }
+        sort(pi);
+        return pi;
+    }
+
+    function sort(Plant_info[] memory pi) private pure{
+        uint length = pi.length;
+
+        for(uint i=0;i<length-1;i++){
+            for(uint j=i+1;j<length;j++){
+                if(pi[i].costperunit > pi[j].costperunit){
+                    Plant_info memory temp = pi[i];
+                    pi[i] = pi[j];
+                    pi[j] = temp;
+                }
+            }
+        }
+    }
+}
